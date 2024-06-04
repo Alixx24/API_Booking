@@ -14,7 +14,7 @@ class Review extends Model
         'user_id',
         'review',
         'stars',
-        'business_id'
+        'busieness_id'
     ];
 
     public function user()
@@ -22,8 +22,8 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function business()
+    public function busieness()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Busieness::class);
     }
 }

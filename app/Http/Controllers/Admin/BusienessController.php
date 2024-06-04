@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Business;
+use App\Models\Busieness;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BusinessController extends Controller
+class BusienessController extends Controller
 {
     public function index()
     {
-        $business = Business::paginate(10);
-        return response()->json($business);
+        $Busieness = Busieness::paginate(10);
+        return response()->json($Busieness);
     }
     public function store(Request $request)
     {
@@ -26,12 +26,12 @@ class BusinessController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson());
         }
-        Business::create(array_merge($validator->validated()));
-        return response()->json('Business is added');
+        Busieness::create(array_merge($validator->validated()));
+        return response()->json('Busieness is added');
     }
     public function update(Request $request, $id)
     {
-        $business = Business::findOrFail($id);
+        $Busieness = Busieness::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'user_id' => 'required',
@@ -40,14 +40,14 @@ class BusinessController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson());
         }
-        $business->update(array_merge($validator->validated()));
-        return response()->json('Business is updated');
+        $Busieness->update(array_merge($validator->validated()));
+        return response()->json('Busieness is updated');
     }
 
     public function destroy($id)
     {
-        $business = Business::findOrFail($id);
-        $business->delete();
-        return response()->json('Business is deleted');
+        $Busieness = Busieness::findOrFail($id);
+        $Busieness->delete();
+        return response()->json('Busieness is deleted');
     }
 }

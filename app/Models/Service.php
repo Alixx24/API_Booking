@@ -11,14 +11,14 @@ class Service extends Model
     protected $table = 'services';
 
     protected $fillable = [
-        'business_id',
+        'busieness_id',
         'description',
         'price',
         'name'
     ];
 
-    public function business()
+    public function busieness()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Busieness::class);
     }
 }
