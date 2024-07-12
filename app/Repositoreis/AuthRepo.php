@@ -17,6 +17,7 @@ class AuthRepo implements AuthRepoInterface
         return $user->createToken('auth-token')->plainTextToken;
     }
     //tahnks registerRepo , isee taht
+    //i am AuthRepo
     public function register(array $data)
     {
         return User::create([
