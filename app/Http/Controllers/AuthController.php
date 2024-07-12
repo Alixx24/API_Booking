@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositoreis\AuthRepoInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    private AuthRepoInterface $repo;
+
+    public function __construct(AuthRepoInterface $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,9 +56,10 @@ class AuthController extends Controller
 
         }
 
-        $user = User::where('email', $request->email)->first();
+        // $user = User::where('email', $request->email)->first();
         
-        $token = $user->createToken('auth-token')->plainTextToken;
+        // $token = $user->createToken('auth-token')->plainTextToken;
+        $token = $this->repo->login($request);
         return response()->json(['token' => $token]);
     }
 }
