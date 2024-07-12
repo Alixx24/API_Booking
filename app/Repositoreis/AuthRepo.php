@@ -16,10 +16,10 @@ class AuthRepo implements AuthRepoInterface
 
         return $user->createToken('auth-token')->plainTextToken;
     }
-
+    //tahnks registerRepo , isee taht
     public function register(array $data)
     {
-       return User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
