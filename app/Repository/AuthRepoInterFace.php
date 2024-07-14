@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 interface AuthRepoInterFace
 {
     function login(Request $request);
-    function register();
+    function register($validator);
 }

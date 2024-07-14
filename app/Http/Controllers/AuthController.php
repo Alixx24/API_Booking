@@ -23,40 +23,33 @@ class AuthController extends Controller
             'email' => 'required|string|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
-        ));
+     
+        $user = $this->repo->register($validator->validate());
         return response()->json([
             'message' => 'User succefully created',
             'user' => $user,
-        ],201);
+        ], 201);
     }
 
     public function login(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required|min:6',
         ]);
-        
-        if($validator->fails())
-        {
-            return response()->json($validator->errors(),422);
-        }
-       
-        if(!$token = auth()->attempt($validator->validate()))
-        {
-            return response()->json(['error' => 'unAutorized'],401);
 
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
 
-        // $user = User::where('email', $request->email)->first();
+        if (!$token = auth()->attempt($validator->validate())) {
+            return response()->json(['error' => 'unAutorized'], 401);
+        }
+
         $user = $this->repo->login($request);
         $token = $user->createToken('auth-token')->plainTextToken;
         return response()->json(['token' => $token]);
