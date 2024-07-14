@@ -12,7 +12,6 @@ class AuthRepo implements AuthRepoInterFace
 
     public function login(Request $request)
     {
-
         return $user = User::where('email', $request->email)->first();
     }
 
