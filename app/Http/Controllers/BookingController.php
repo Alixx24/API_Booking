@@ -17,7 +17,6 @@ class BookingController extends Controller
     }
     public function index()
     {
-        dd('ds');
         $bookings = $this->repo->index();
         return response()->json($bookings);
     }
