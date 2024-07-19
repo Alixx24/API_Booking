@@ -20,24 +20,22 @@ class BookingController extends Controller
         $bookings = $this->repo->index();
         return response()->json($bookings);
     }
-    public function store(Request $request)
-    {
-        //    dd($request->headers);
-        $validator = Validator::make($request->all(), [
+
+    public function store(Request $request) {
+        $data = $request->all(); 
+
+        $validator = Validator::make($data, [
             'service_id' => 'required',
             'time' => 'required'
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson());
-        }
-        $booking = new Booking();
-        // $booking->user_id = Auth::id();
-        $booking->user_id = 1;
 
-        $booking->service_id = $request->service_id;
-        $booking->time = $request->time;
-        $booking->save();
-        return response()->json('Booking is added');
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $this->repo->store($data);
+
+        return response()->json('Booking is added', 201);
     }
     public function destroy($id)
     {

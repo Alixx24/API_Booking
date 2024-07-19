@@ -12,4 +12,12 @@ class BookingRepo implements BookingRepoInterface
 
         return Booking::where('user_id', 1)->with('service')->paginate(10);
     }
+
+    public function store(array $data) {
+        $booking = new Booking();
+        $booking->user_id = 1;
+        $booking->service_id = $data['service_id'];
+        $booking->time = $data['time'];
+        $booking->save();
+    }
 }
