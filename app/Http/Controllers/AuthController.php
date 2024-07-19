@@ -3,19 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Repository\AuthRepoInterFace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 class AuthController extends Controller
 {
-    private AuthRepoInterFace $repo;
-
-    public function __construct(AuthRepoInterFace $repo)
-    {
-        $this->repo = $repo;
-    }
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -26,8 +18,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-
-        $user = $this->repo->register($validator->validate());
+        $user = User::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
         return response()->json([
             'message' => 'User succefully created',
             'user' => $user,
@@ -50,15 +44,9 @@ class AuthController extends Controller
             return response()->json(['error' => 'unAutorized'], 401);
         }
 
-        $user = $this->repo->login($request);
+        $user = User::where('email', $request->email)->first();
+        
         $token = $user->createToken('auth-token')->plainTextToken;
-    
-        $userUp = User::find($validator['email']);
-        dd($userUp);
-        $userUp->api_token = Str::random(60);
-        $userUp->save();
-        return $userUp;
-
         return response()->json(['token' => $token]);
     }
 }
