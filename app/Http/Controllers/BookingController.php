@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Repositoreis\BookingRepoInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
+    private BookingRepoInterface $repo;
+    public function __construct(BookingRepoInterface $repo)
+    {
+        $this->repo = $repo;
+    }
     public function index()
     {
-        // $bookings = Booking::where('user_id', Auth::id())->with('service')->paginate(10);
-        $bookings = Booking::where('user_id', 1)->with('service')->paginate(10);
+        $bookings = $this->repo->index();
         return response()->json($bookings);
     }
     public function store(Request $request)
