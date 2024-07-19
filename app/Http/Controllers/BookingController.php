@@ -17,6 +17,7 @@ class BookingController extends Controller
     }
     public function store(Request $request)
     {
+        //    dd($request->headers);
         $validator = Validator::make($request->all(), [
             'service_id' => 'required',
             'time' => 'required'

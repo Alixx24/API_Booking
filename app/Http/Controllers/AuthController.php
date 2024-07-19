@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Repository\AuthRepoInterFace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     private AuthRepoInterFace $repo;
@@ -26,7 +26,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-     
+
         $user = $this->repo->register($validator->validate());
         return response()->json([
             'message' => 'User succefully created',
@@ -52,6 +52,13 @@ class AuthController extends Controller
 
         $user = $this->repo->login($request);
         $token = $user->createToken('auth-token')->plainTextToken;
+    
+        $userUp = User::find($validator['email']);
+        dd($userUp);
+        $userUp->api_token = Str::random(60);
+        $userUp->save();
+        return $userUp;
+
         return response()->json(['token' => $token]);
     }
 }
