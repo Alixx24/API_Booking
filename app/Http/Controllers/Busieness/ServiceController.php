@@ -13,10 +13,12 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $busieness = Busieness::where('user_id',Auth::id())->first();
+        // $busieness = Busieness::where('user_id',Auth::id())->first();
+        $busieness = 3;
         $services = Service::where('busieness_id', $busieness)->paginate(10);
         return response()->json($services);
     }
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

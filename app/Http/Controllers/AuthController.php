@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Repository\AuthRepoInterFace;
+use App\Repositoreis\AuthRepoInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    private AuthRepoInterFace $repo;
+    private AuthRepoInterface $repo;
 
     public function __construct(AuthRepoInterFace $repo)
     {
