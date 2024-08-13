@@ -13,6 +13,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
+        dd('services');
         $busieness = Busieness::where('user_id',Auth::id())->first();
         $services = Service::where('busieness_id', $busieness)->paginate(10);
         return response()->json($services);
