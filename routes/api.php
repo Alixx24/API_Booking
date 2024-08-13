@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BusienessController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Busieness\ServiceController;
 use App\Models\Busieness;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,7 @@ Route::apiResource('user', UserController::class);
 Route::apiResource('busieness', BusienessController::class);
 Route::post('update_busieness/{id}', [Busieness::class, 'update']);
 
+Route::apiResource('admin/ticket', TicketController::class);
 
 // Route::get('auth')->group(function (Request $request) {
 
