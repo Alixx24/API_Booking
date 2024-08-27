@@ -30,6 +30,8 @@ Route::apiResource('busieness', BusienessController::class);
 Route::post('update_busieness/{id}', [Busieness::class, 'update']);
 
 Route::apiResource('admin/ticket', TicketController::class);
+Route::post('admin/ticket/{id}/answer/', [TicketController::class, 'answer']);
+
 
 // Route::get('auth')->group(function (Request $request) {
 
